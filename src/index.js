@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 
 const pizzaData = [
   {
@@ -47,34 +48,55 @@ const pizzaData = [
 ];
 
 function Header() {
-  return <h1>Fast React Pizza co.</h1>;
+  return (
+    <header className="header">
+      <h1>Fast React Pizza co.</h1>;
+    </header>
+  );
 }
 
 function Menu() {
   return (
-    <div>
+    <main className="menu">
       <h2>Our Menu</h2>
-      <Pizza />
+      <ul className="pizzas">
+        {pizzaData.map((pizza) => (
+          <Pizza pizzaObj={pizza} key={pizza.name} />
+        ))}
+      </ul>
+    </main>
+  );
+}
+function Pizza(props) {
+  return (
+    <div className="pizza">
+      <img src={props.pizzaObj.photoName} />
+      <li>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span>{props.pizzaObj.price}</span>
+      </li>
     </div>
   );
 }
 
 function Footer() {
-  return <footer>{new Date().toLocaleTimeString()} we're open!</footer>;
-}
+  const openHour = 12;
+  const closeHour = 22;
+  const hour = new Date().getHours();
+  const isOpen = hour >= openHour && hour <= closeHour;
+  //   if (hour >= openHour && hour <= closeHour) console.log("isOpen");
 
-function Pizza() {
   return (
-    <div>
-      <img src="pizzas/prosciutto.jpg" />
-      <h1>Pizza Prosciutto</h1>
-    </div>
+    <footer className="footer">
+      {new Date().toLocaleTimeString()} we're open!
+    </footer>
   );
 }
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <Header />
       <Menu />
       <Footer />
